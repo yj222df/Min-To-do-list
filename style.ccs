@@ -1,0 +1,16 @@
+body {
+    font-family: Arial;
+}
+
+li {
+    cursor: pointer;
+}
+
+.done {
+    text-decoration: line-through;
+    color: gray;
+}
+
+#message {
+    color: red;
+}
