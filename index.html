@@ -2,23 +2,34 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Todo lista</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My ToDo</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h1>Min Todo lista</h1>
+    <main class="todo-container">
+        <h1>My ToDo</h1>
 
-    <input type="text" id="input">
-    <button id="button">Lägg till</button>
+        <p class="counter">
+            Completed: <span id="count">0</span>
+        </p>
 
-    <p id="message"></p>
+        <div class="input-container">
+            <input
+                type="text"
+                id="input"
+                placeholder="Write a todo..."
+            >
+            <button id="button">OK</button>
+        </div>
 
-    <ul id="list"></ul>
+        <p id="message"></p>
 
-    <p>Klara uppgifter: <span id="count">0</span></p>
+        <ul id="list"></ul>
+    </main>
 
     <script src="script.js"></script>
-
 </body>
 </html>
