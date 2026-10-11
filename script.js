@@ -1,48 +1,105 @@
-const input = document.querySelector("#input");
-const button = document.querySelector("#button");
-const list = document.querySelector("#list");
-const message = document.querySelector("#message");
-const count = document.querySelector("#count");
+const input = document.getElementById("input");
+const button = document.getElementById("button");
+const list = document.getElementById("list");
+const message = document.getElementById("message");
+const count = document.getElementById("count");
 
+
+// Array som innehåller alla todos
 let todos = [];
 
-button.addEventListener("click", function() {
 
-    if (input.value == "") {
-        message.textContent = "Du måste skriva något";
+// Lägg till todo
+button.addEventListener("click", function () {
+
+    const text = input.value.trim();
+
+    // Om input är tom
+    if (text === "") {
+        message.textContent = "You must write something!";
+
+        // Starta om animationen
+        message.classList.remove("error-animation");
+        void message.offsetWidth;
+        message.classList.add("error-animation");
+
         return;
     }
 
+    // Ta bort eventuellt felmeddelande
     message.textContent = "";
 
-    let todo = {
-        text: input.value,
+
+    // Skapa objektet som sparas i arrayen
+    const todo = {
+        text: text,
         done: false
     };
 
     todos.push(todo);
 
-    let li = document.createElement("li");
-    li.textContent = input.value;
 
-    li.addEventListener("click", function() {
+    // Skapa li
+    const li = document.createElement("li");
+
+
+    // Texten
+    const todoText = document.createElement("span");
+    todoText.textContent = todo.text;
+
+
+    // Delete-knapp
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "🗑️";
+    deleteButton.classList.add("delete-button");
+
+
+    li.appendChild(todoText);
+    li.appendChild(deleteButton);
+
+    list.appendChild(li);
+
+
+    // Klick på todo = completed
+    li.addEventListener("click", function () {
 
         todo.done = !todo.done;
 
         li.classList.toggle("done");
 
-        let antal = 0;
-
-        for (let i = 0; i < todos.length; i++) {
-            if (todos[i].done == true) {
-                antal++;
-            }
-        }
-
-        count.textContent = antal;
+        updateCount();
     });
 
-    list.appendChild(li);
 
+    // Radera todo
+    deleteButton.addEventListener("click", function (event) {
+
+        // Hindrar klicket från att också markera todo som klar
+        event.stopPropagation();
+
+        const index = todos.indexOf(todo);
+
+        if (index !== -1) {
+            todos.splice(index, 1);
+        }
+
+        li.remove();
+
+        updateCount();
+    });
+
+
+    // Töm input
     input.value = "";
 });
+
+
+// Uppdatera räknaren
+function updateCount() {
+
+    const completedTodos = todos.filter(function (todo) {
+        return todo.done === true;
+    });
+
+    count.textContent = completedTodos.length;
+}
